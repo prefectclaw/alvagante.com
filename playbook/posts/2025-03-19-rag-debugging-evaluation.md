@@ -139,6 +139,7 @@ dataset.add("How does attention work?")
 
 The most important evaluation metric for RAG: is the model sticking to the retrieved context?
 
+{% raw %}
 ```python
 def check_faithfulness(query, retrieved_docs, generated_answer):
     """
@@ -177,6 +178,7 @@ def check_faithfulness(query, retrieved_docs, generated_answer):
 # If 30% of answers are hallucinated, your RAG pipeline has a retrieval quality problem
 # If 0% are hallucinated, your retrieval is working (generation is fine)
 ```
+{% endraw %}
 
 ### Retrieval Quality Debugging
 

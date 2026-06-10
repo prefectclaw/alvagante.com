@@ -1,11 +1,11 @@
-id: b2c3d4e5-f6a7-8901-bcde-f12345678901
-name: blog-post
+id: e3920c99-a8f2-4aed-a529-4896229c54b0
+name: notebook
 description: >
-  Generate a standalone AI Engineer blog post.
+  Generate a working notebook note from AI Engineer source material.
 tags:
   site: alvagante.com
   cadence: on-demand
-  media: blog-post
+  media: notebook
 inputs:
   properties:
     topic:
@@ -15,14 +15,14 @@ inputs:
   required: []
 jobs:
   - name: generate
-    description: Generate the blog post and write its site artifact.
+    description: Generate the working notebook and write its site artifact.
     steps:
       - name: generate
-        description: Run site-curation.write_blog_post.
+        description: Run site-curation.generate_notebook.
         task:
           type: model_method
           modelIdOrName: site-curation
-          methodName: write_blog_post
+          methodName: generate_notebook
           inputs:
             mode: standalone
             topic: ${{ inputs.topic }}

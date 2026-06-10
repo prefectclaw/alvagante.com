@@ -1,0 +1,254 @@
+foundations:
+  - AI systems thinking
+  - Machine learning fundamentals
+  - Deep learning fundamentals
+  - Probability for AI engineers
+  - Linear algebra for neural networks
+  - Optimization and gradient descent
+  - Evaluation-driven development
+  - Reproducible AI experiments
+
+language_models:
+  - Transformer architecture
+  - Tokenization and context windows
+  - Pretraining objectives
+  - Instruction tuning
+  - Preference optimization
+  - Model distillation
+  - Mixture-of-experts models
+  - Small language models
+  - Long-context reasoning
+  - Multilingual language models
+
+prompt_engineering:
+  - Prompt design patterns
+  - System prompt architecture
+  - Few-shot prompting
+  - Chain-of-thought prompting
+  - Structured output prompting
+  - Prompt injection resistance
+  - Prompt versioning
+  - Prompt evaluation
+
+rag_and_knowledge_systems:
+  - Retrieval-augmented generation
+  - Embedding model selection
+  - Vector database design
+  - Hybrid search
+  - Chunking strategies
+  - Reranking pipelines
+  - Knowledge graph retrieval
+  - Citation and source grounding
+  - RAG evaluation
+  - Enterprise search assistants
+
+agents_and_workflows:
+  - Agent architecture
+  - Tool calling
+  - Function calling schemas
+  - Planning and execution loops
+  - Multi-agent coordination
+  - Human-in-the-loop workflows
+  - Agent memory
+  - Agent observability
+  - Agent failure modes
+  - Workflow orchestration for AI systems
+
+ai_software_engineering:
+  - AI-assisted coding
+  - Code generation review
+  - Test generation with AI
+  - Refactoring with AI agents
+  - Software architecture with LLMs
+  - AI pair programming
+  - Repository-aware coding agents
+  - Secure coding with AI
+  - Legacy code modernization
+  - Developer experience for AI tools
+
+mlops_and_llmops:
+  - Model lifecycle management
+  - Experiment tracking
+  - Model registry design
+  - Feature stores
+  - LLM deployment patterns
+  - Model monitoring
+  - Drift detection
+  - Continuous evaluation
+  - Rollbacks and canary releases
+  - Cost monitoring for AI workloads
+
+data_engineering_for_ai:
+  - Training data pipelines
+  - Data quality for AI
+  - Data labeling operations
+  - Synthetic data generation
+  - Dataset versioning
+  - Data lineage
+  - Privacy-preserving data preparation
+  - Unstructured data extraction
+  - Document processing pipelines
+  - Real-time AI data streams
+
+ai_infrastructure:
+  - GPU capacity planning
+  - Inference serving
+  - Batch inference
+  - Model quantization
+  - Model caching
+  - Autoscaling AI services
+  - Edge AI deployment
+  - Serverless AI inference
+  - High-performance training clusters
+  - AI platform architecture
+
+evaluation_and_testing:
+  - Golden datasets
+  - LLM-as-judge evaluation
+  - Human evaluation workflows
+  - Regression testing for prompts
+  - Hallucination detection
+  - Robustness testing
+  - Bias and fairness evaluation
+  - Safety testing
+  - Benchmark design
+  - Production quality gates
+
+ai_security:
+  - Prompt injection
+  - Data exfiltration through AI tools
+  - Model supply chain security
+  - AI red teaming
+  - Adversarial examples
+  - Jailbreak testing
+  - Secure tool execution
+  - Secrets handling in AI systems
+  - Model abuse prevention
+  - AI incident response
+
+ai_governance_and_compliance:
+  - AI risk management
+  - Model cards
+  - Dataset documentation
+  - Audit trails for AI systems
+  - Explainability requirements
+  - Regulatory readiness
+  - Responsible AI review boards
+  - AI procurement governance
+  - Copyright and training data
+  - Policy controls for AI usage
+
+product_management_for_ai:
+  - AI product discovery
+  - Use case prioritization
+  - Human-centered AI design
+  - AI feature scoping
+  - Measuring AI product value
+  - User trust and calibration
+  - Failure-tolerant UX
+  - AI pricing models
+  - Build versus buy decisions
+  - AI roadmap management
+
+ai_ux_and_design:
+  - Conversational interface design
+  - AI interaction patterns
+  - Confidence and uncertainty displays
+  - Review and approval interfaces
+  - Explainable UX
+  - Promptable interfaces
+  - Multimodal user experiences
+  - AI accessibility
+  - Error recovery in AI products
+  - Designing for user control
+
+multimodal_ai:
+  - Vision-language models
+  - Image generation systems
+  - Video generation systems
+  - Speech recognition
+  - Text-to-speech systems
+  - Audio generation
+  - Document understanding
+  - Multimodal RAG
+  - Cross-modal retrieval
+  - Synthetic media workflows
+
+computer_vision:
+  - Image classification
+  - Object detection
+  - Semantic segmentation
+  - OCR pipelines
+  - Visual search
+  - Face recognition risks
+  - Medical imaging AI
+  - Industrial vision inspection
+  - Vision model evaluation
+  - Real-time video analytics
+
+speech_and_audio_ai:
+  - Voice agents
+  - Speech-to-text pipelines
+  - Speaker diarization
+  - Voice cloning risks
+  - Audio embeddings
+  - Meeting summarization
+  - Call center AI
+  - Real-time transcription
+  - Speech evaluation
+  - Multilingual voice interfaces
+
+robotics_and_embodied_ai:
+  - Robot perception
+  - Robot planning
+  - Reinforcement learning for control
+  - Sim-to-real transfer
+  - Foundation models for robotics
+  - Autonomous navigation
+  - Human-robot interaction
+  - Warehouse robotics
+  - Safety for embodied AI
+  - Edge inference for robots
+
+decision_intelligence:
+  - Forecasting with AI
+  - Recommendation systems
+  - Optimization under uncertainty
+  - Causal inference
+  - Simulation and digital twins
+  - Anomaly detection
+  - Risk scoring
+  - Automated decision support
+  - Human override design
+  - Decision auditability
+
+domain_ai_applications:
+  - AI for cybersecurity
+  - AI for DevOps
+  - AI for finance
+  - AI for healthcare
+  - AI for legal work
+  - AI for education
+  - AI for marketing
+  - AI for sales
+  - AI for customer support
+  - AI for manufacturing
+  - AI for scientific research
+  - AI for public sector services
+
+ai_professions:
+  - AI engineer
+  - Machine learning engineer
+  - Data scientist
+  - Data engineer for AI
+  - MLOps engineer
+  - LLMOps engineer
+  - AI product manager
+  - AI UX designer
+  - AI safety engineer
+  - AI security engineer
+  - AI solutions architect
+  - AI technical writer
+  - AI trainer and evaluator
+  - AI governance lead
+  - AI transformation consultant

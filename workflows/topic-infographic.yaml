@@ -1,11 +1,11 @@
-id: b2c3d4e5-f6a7-8901-bcde-f12345678901
-name: blog-post
+id: 966be4ed-1b64-4c28-b8ec-4f53fcbfea90
+name: infographic
 description: >
-  Generate a standalone AI Engineer blog post.
+  Generate an infographic brief from AI Engineer source material.
 tags:
   site: alvagante.com
   cadence: on-demand
-  media: blog-post
+  media: infographic
 inputs:
   properties:
     topic:
@@ -15,14 +15,14 @@ inputs:
   required: []
 jobs:
   - name: generate
-    description: Generate the blog post and write its site artifact.
+    description: Generate the infographic brief and write its site artifact.
     steps:
       - name: generate
-        description: Run site-curation.write_blog_post.
+        description: Run site-curation.generate_infographic.
         task:
           type: model_method
           modelIdOrName: site-curation
-          methodName: write_blog_post
+          methodName: generate_infographic
           inputs:
             mode: standalone
             topic: ${{ inputs.topic }}

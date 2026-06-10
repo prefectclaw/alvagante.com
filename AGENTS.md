@@ -120,6 +120,19 @@ The `daily-news` workflow calls `site-curation.build_daily_digest`, writes `_dat
 
 The model can run without an OpenAI key by using feed excerpts. For AI enrichment, provide `OPENAI_API_KEY` through a swamp vault, environment variable, or GitHub Actions secret. Never commit API keys or put them directly in model YAML.
 
+## AI Engineering Media Production
+
+The AI Engineering section is generated through the `media-production` swamp workflow. Use this workflow to create content about AI-related fields and professions across the configured media formats: blog posts, slides, notebooks, cheat sheets, infographics, social posts, podcasts, videos, and memes.
+
+Use `_data/ai_engineering_topics.yml` as the topic source for this workflow. The file contains only topic titles, grouped by AI field, so workflow inputs can be selected without extra parsing or editorial metadata. Keep the list broad enough to cover relevant AI professions and domains, but avoid near-duplicate topics that would produce overlapping media batches.
+
+When adding topics:
+
+- Add topic titles under the closest existing AI field before creating a new field.
+- Prefer durable engineering topics over short-lived vendor announcements.
+- Keep titles concise, concrete, and suitable as direct workflow input.
+- Do not add descriptions, URLs, prompts, or generation status to the topic file unless the workflow is explicitly changed to consume them.
+
 ## GitHub Actions
 
 `.github/workflows/pages.yml` handles build, optional digest generation, committing generated digest changes, and Pages deployment. It runs on:

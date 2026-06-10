@@ -128,8 +128,36 @@ const EnrichLinkMetadataArgsSchema = z.object({
   forceReenrich: z.boolean().default(false),
 });
 
+const MediaKindSchema = z.enum([
+  "blog-post",
+  "social-posts",
+  "cheatsheet",
+  "infographic",
+  "short-video",
+  "podcast",
+  "slides",
+  "notebook",
+  "meme",
+]);
+
+const MediaGenerationArgsSchema = z.object({
+  topic: z.string().default("AI engineering field notes"),
+  title: z.string().optional(),
+  source: z.string().default("daily digest and curated site links"),
+  style: z.string().default("alfabot"),
+  mode: z.string().default("standalone"),
+  dryRun: z.boolean().default(false),
+  writeFile: z.boolean().default(true),
+  openaiApiKey: z.string().optional(),
+  openaiModel: z.string().optional(),
+  ollamaBaseUrl: z.string().optional(),
+  ollamaModel: z.string().optional(),
+});
+
 type Source = z.infer<typeof SourceSchema>;
 type NewsItem = z.infer<typeof NewsItemSchema>;
+type MediaKind = z.infer<typeof MediaKindSchema>;
+type MediaGenerationArgs = z.infer<typeof MediaGenerationArgsSchema>;
 
 interface SiteMetadata {
   ogImage?: string;
@@ -635,6 +663,271 @@ function directoryName(path: string): string {
   return slash === -1 ? "" : normalized.slice(0, slash);
 }
 
+function slugify(value: string): string {
+  return value
+    .toLowerCase()
+    .replaceAll(/[^a-z0-9]+/g, "-")
+    .replaceAll(/^-+|-+$/g, "")
+    .slice(0, 80) || "untitled";
+}
+
+function titleCase(value: string): string {
+  return value
+    .replaceAll(/[-_]+/g, " ")
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+function mediaCollection(kind: MediaKind): string | undefined {
+  switch (kind) {
+    case "blog-post":
+      return "_ai-blog";
+    case "social-posts":
+      return "_ai-social-posts";
+    case "cheatsheet":
+      return "_ai-cheat-sheets";
+    case "infographic":
+      return "_ai-infographics";
+    case "slides":
+      return "_ai-slides";
+    case "notebook":
+      return "_ai-notebooks";
+    case "podcast":
+      return "_ai-podcasts";
+    case "short-video":
+      return "_ai-videos";
+    case "meme":
+      return "_ai-memes";
+    default:
+      return undefined;
+  }
+}
+
+function mediaPath(
+  globals: z.infer<typeof GlobalArgsSchema>,
+  kind: MediaKind,
+  title: string,
+): string {
+  const today = new Date().toISOString().slice(0, 10);
+  const slug = slugify(title);
+  const collection = mediaCollection(kind);
+  if (collection) {
+    return pathJoin(globals.repoDir, collection, `${today}-${slug}.md`);
+  }
+  return pathJoin(
+    globals.repoDir,
+    "_data/generated/media",
+    `${today}-${kind}-${slug}.yml`,
+  );
+}
+
+function renderMediaMarkdown(
+  kind: MediaKind,
+  title: string,
+  args: MediaGenerationArgs,
+): string {
+  const today = new Date().toISOString().slice(0, 10);
+  const label = titleCase(kind);
+  const body = mediaBody(kind, title, args);
+  return `---
+title: "${title.replaceAll('"', '\\"')}"
+date: ${today}
+layout: post
+collection: ai-${kind}
+media_kind: ${kind}
+source: "${args.source.replaceAll('"', '\\"')}"
+---
+
+# ${title}
+
+${body}
+
+---
+
+Generated as ${label} content from: ${args.source}
+`;
+}
+
+function mediaBody(
+  kind: MediaKind,
+  title: string,
+  args: MediaGenerationArgs,
+): string {
+  switch (kind) {
+    case "blog-post":
+      return `Intent first. Code second.
+
+This draft turns ${args.topic} into an AI engineering note: what changed, what breaks, and what an engineer should verify before trusting the output.
+
+## Angle
+
+- The practical claim: ${args.topic}
+- The failure mode worth testing
+- The operational checklist before shipping
+
+## Draft
+
+The machine can generate a plausible path. The engineer still owns the map.
+
+Use this post as a starting point for a tighter final essay.`;
+    case "social-posts":
+      return `## LinkedIn
+
+${args.topic}: the useful question is not whether AI can produce output. It is whether you can tell when the output is wrong.
+
+## Bluesky
+
+AI can draft the thing. You still need to inspect the joints.
+
+## X
+
+AI generation is cheap. Verification is the job.`;
+    case "cheatsheet":
+      return `## Core Checks
+
+- Define the expected behavior before generating.
+- Inspect integration boundaries.
+- Test failure paths, not only the happy path.
+- Keep generated changes small enough to review.
+
+## Commands
+
+\`\`\`bash
+swamp workflow validate media-production --json
+swamp workflow run media-production
+\`\`\``;
+    case "infographic":
+      return `## Infographic Brief
+
+Title: ${title}
+
+Panels:
+
+1. Input: topic, sources, constraints.
+2. Generation: model turns intent into draft assets.
+3. Verification: engineer checks facts, code, and fit.
+4. Shipping: markdown and data land in the static site.
+
+Visual direction: dense dashboard, high contrast, minimal ornament.`;
+    case "short-video":
+      return `## Script
+
+Hook: AI did not remove the engineering job. It moved it.
+
+Beat 1: Generation is now fast enough to be disposable.
+
+Beat 2: Review, tests, and taste are the remaining bottlenecks.
+
+Beat 3: Ship only what you can explain.
+
+CTA: Run the workflow, inspect the artifact, improve the prompt.`;
+    case "podcast":
+      return `## NotebookLM Podcast Packet
+
+Use this notebook as the source pack for NotebookLM audio overview generation.
+
+### Source Brief
+
+Topic: ${args.topic}
+
+Context: ${args.source}
+
+### Host Notes
+
+- Open with the practical problem.
+- Contrast generated speed with verification cost.
+- End with a concrete workflow listeners can run.
+
+### Suggested Audio Overview Prompt
+
+Create a two-host technical podcast episode from this notebook. Keep it practical, skeptical, and focused on AI engineering workflows.`;
+    case "slides":
+      return `## Slide Outline
+
+1. ${title}
+2. Why this workflow exists
+3. Input sources
+4. Generation steps
+5. Review gates
+6. Static-site publishing
+7. Failure modes
+8. Next iteration`;
+    case "notebook":
+      return `## Notebook
+
+### Question
+
+What does ${args.topic} change for an AI engineer?
+
+### Notes
+
+- Source material: ${args.source}
+- Claims to verify
+- Examples to collect
+- Follow-up workflows to run
+
+### Working Conclusion
+
+Generated material is useful when it becomes inspectable, versioned content.`;
+    case "meme":
+      return `caption: "When the model says it shipped, but the tests say it hallucinated the API."
+format: image-brief
+scene: Split screen. Left: confident generated output. Right: a calm terminal showing failing validation.
+alt: Meme brief about validating AI-generated work before publishing.`;
+  }
+}
+
+async function generateMediaArtifact(
+  kind: MediaKind,
+  args: MediaGenerationArgs,
+  context: {
+    globalArgs: unknown;
+    writeResource: (
+      spec: string,
+      name: string,
+      value: unknown,
+    ) => Promise<unknown>;
+  },
+) {
+  const globals = GlobalArgsSchema.parse(context.globalArgs);
+  const today = new Date().toISOString().slice(0, 10);
+  const title = args.title || `${titleCase(kind)}: ${args.topic}`;
+  const path = mediaPath(globals, kind, title);
+  const markdown = renderMediaMarkdown(kind, title, args);
+  const relativePath = path.startsWith(`${globals.repoDir}/`)
+    ? path.slice(globals.repoDir.length + 1)
+    : path;
+  const artifact = {
+    generated_at: new Date().toISOString(),
+    date: today,
+    kind,
+    title,
+    topic: args.topic,
+    source: args.source,
+    path: relativePath,
+    content: markdown,
+    dryRun: args.dryRun,
+  };
+
+  if (args.writeFile && !args.dryRun) {
+    const dir = directoryName(path);
+    if (dir) await Deno.mkdir(dir, { recursive: true });
+    await Deno.writeTextFile(
+      path,
+      mediaCollection(kind) ? markdown : stringifyYaml(artifact),
+    );
+  }
+
+  const handle = await context.writeResource(
+    "media-artifact",
+    `${today}-${kind}-${slugify(title)}`,
+    artifact,
+  );
+  return { dataHandles: [handle] };
+}
+
 function renderRssXml(
   digest: z.infer<typeof DigestSchema>,
   siteUrl: string,
@@ -974,8 +1267,88 @@ export const model = {
       lifetime: "7d",
       garbageCollection: 5,
     },
+    "media-artifact": {
+      description:
+        "Generated AI-engineering media content written to site files",
+      schema: z.object({
+        generated_at: z.string(),
+        date: z.string(),
+        kind: MediaKindSchema,
+        title: z.string(),
+        topic: z.string(),
+        source: z.string(),
+        path: z.string(),
+        content: z.string(),
+        dryRun: z.boolean(),
+      }),
+      lifetime: "30d",
+      garbageCollection: 20,
+    },
   },
   methods: {
+    write_blog_post: {
+      description:
+        "Generate a blog post markdown artifact for the AI Engineer section",
+      arguments: MediaGenerationArgsSchema,
+      execute: async (args, context) =>
+        await generateMediaArtifact("blog-post", args, context),
+    },
+    generate_social_posts: {
+      description:
+        "Generate social post copy and ship it as static site content",
+      arguments: MediaGenerationArgsSchema,
+      execute: async (args, context) =>
+        await generateMediaArtifact("social-posts", args, context),
+    },
+    generate_cheatsheet: {
+      description:
+        "Generate a technical cheat sheet and ship it as static site content",
+      arguments: MediaGenerationArgsSchema,
+      execute: async (args, context) =>
+        await generateMediaArtifact("cheatsheet", args, context),
+    },
+    generate_infographic: {
+      description:
+        "Generate an infographic brief and ship it as static site content",
+      arguments: MediaGenerationArgsSchema,
+      execute: async (args, context) =>
+        await generateMediaArtifact("infographic", args, context),
+    },
+    generate_short_video: {
+      description:
+        "Generate a short-form video script and publishable content record",
+      arguments: MediaGenerationArgsSchema,
+      execute: async (args, context) =>
+        await generateMediaArtifact("short-video", args, context),
+    },
+    prepare_notebooklm_podcast: {
+      description:
+        "Prepare a NotebookLM source notebook for podcast audio generation",
+      arguments: MediaGenerationArgsSchema,
+      execute: async (args, context) =>
+        await generateMediaArtifact("podcast", args, context),
+    },
+    generate_slides: {
+      description:
+        "Generate a slide outline and ship it as static site content",
+      arguments: MediaGenerationArgsSchema,
+      execute: async (args, context) =>
+        await generateMediaArtifact("slides", args, context),
+    },
+    generate_notebook: {
+      description:
+        "Generate a working notebook note and ship it as static site content",
+      arguments: MediaGenerationArgsSchema,
+      execute: async (args, context) =>
+        await generateMediaArtifact("notebook", args, context),
+    },
+    create_meme: {
+      description:
+        "Generate a meme brief and publishable generated media record",
+      arguments: MediaGenerationArgsSchema,
+      execute: async (args, context) =>
+        await generateMediaArtifact("meme", args, context),
+    },
     fetch_feeds: {
       description:
         "Fetch all enabled feeds from _data/sources in one fan-out run",

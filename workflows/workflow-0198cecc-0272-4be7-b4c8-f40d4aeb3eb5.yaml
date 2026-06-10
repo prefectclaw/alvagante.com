@@ -1,11 +1,11 @@
-id: b2c3d4e5-f6a7-8901-bcde-f12345678901
-name: blog-post
+id: 0198cecc-0272-4be7-b4c8-f40d4aeb3eb5
+name: short-video
 description: >
-  Generate a standalone AI Engineer blog post.
+  Generate a short-form video script from AI Engineer source material.
 tags:
   site: alvagante.com
   cadence: on-demand
-  media: blog-post
+  media: short-video
 inputs:
   properties:
     topic:
@@ -15,14 +15,14 @@ inputs:
   required: []
 jobs:
   - name: generate
-    description: Generate the blog post and write its site artifact.
+    description: Generate the short video script and write its site artifact.
     steps:
       - name: generate
-        description: Run site-curation.write_blog_post.
+        description: Run site-curation.generate_short_video.
         task:
           type: model_method
           modelIdOrName: site-curation
-          methodName: write_blog_post
+          methodName: generate_short_video
           inputs:
             mode: standalone
             topic: ${{ inputs.topic }}

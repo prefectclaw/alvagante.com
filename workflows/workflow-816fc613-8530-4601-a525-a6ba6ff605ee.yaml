@@ -1,11 +1,11 @@
-id: b2c3d4e5-f6a7-8901-bcde-f12345678901
-name: blog-post
+id: 816fc613-8530-4601-a525-a6ba6ff605ee
+name: cheatsheet
 description: >
-  Generate a standalone AI Engineer blog post.
+  Generate a technical cheat sheet from AI Engineer source material.
 tags:
   site: alvagante.com
   cadence: on-demand
-  media: blog-post
+  media: cheatsheet
 inputs:
   properties:
     topic:
@@ -15,14 +15,14 @@ inputs:
   required: []
 jobs:
   - name: generate
-    description: Generate the blog post and write its site artifact.
+    description: Generate the cheat sheet and write its site artifact.
     steps:
       - name: generate
-        description: Run site-curation.write_blog_post.
+        description: Run site-curation.generate_cheatsheet.
         task:
           type: model_method
           modelIdOrName: site-curation
-          methodName: write_blog_post
+          methodName: generate_cheatsheet
           inputs:
             mode: standalone
             topic: ${{ inputs.topic }}

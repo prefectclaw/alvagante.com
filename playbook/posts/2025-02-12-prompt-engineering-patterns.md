@@ -252,6 +252,7 @@ Include:
 
 Prompt engineering at scale requires templated prompts with variable injection:
 
+{% raw %}
 ```python
 from jinja2 import Template
 
@@ -291,6 +292,7 @@ Provide feedback in the following JSON format:
 
 # This is how professional AI systems manage prompts
 # Templates are versioned, tested, and deployed like code
+{% endraw %}
 
 ### Common Prompt Patterns Cheat Sheet
 

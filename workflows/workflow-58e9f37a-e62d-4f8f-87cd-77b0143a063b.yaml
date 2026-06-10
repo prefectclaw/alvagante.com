@@ -1,11 +1,11 @@
-id: b2c3d4e5-f6a7-8901-bcde-f12345678901
-name: blog-post
+id: 58e9f37a-e62d-4f8f-87cd-77b0143a063b
+name: meme
 description: >
-  Generate a standalone AI Engineer blog post.
+  Create a meme brief from AI Engineer source material.
 tags:
   site: alvagante.com
   cadence: on-demand
-  media: blog-post
+  media: meme
 inputs:
   properties:
     topic:
@@ -15,14 +15,14 @@ inputs:
   required: []
 jobs:
   - name: generate
-    description: Generate the blog post and write its site artifact.
+    description: Generate the meme brief and write its site artifact.
     steps:
       - name: generate
-        description: Run site-curation.write_blog_post.
+        description: Run site-curation.create_meme.
         task:
           type: model_method
           modelIdOrName: site-curation
-          methodName: write_blog_post
+          methodName: create_meme
           inputs:
             mode: standalone
             topic: ${{ inputs.topic }}

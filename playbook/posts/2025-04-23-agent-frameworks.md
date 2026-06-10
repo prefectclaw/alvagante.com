@@ -13,6 +13,7 @@ Agents are just programs with tool access. Most "agentic" patterns are overcompl
 
 An agent is a loop: observe → reason → act → observe → repeat. That's it. Every "agentic framework" you've heard of implements this same loop with different bells and whistles.
 
+{% raw %}
 ```python
 def agent_loop(initial_state, tools, max_steps=10):
     """
@@ -51,6 +52,7 @@ What should you do next? Respond with a JSON object:
 
 # The simplest agent loop handles 80% of use cases.
 ```
+{% endraw %}
 
 ### The Most Useful Agent Patterns
 

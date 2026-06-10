@@ -1,11 +1,11 @@
-id: b2c3d4e5-f6a7-8901-bcde-f12345678901
-name: blog-post
+id: 91b78e0f-c0fa-4fda-a23c-6e2cedb5ee77
+name: podcast
 description: >
-  Generate a standalone AI Engineer blog post.
+  Prepare a NotebookLM source notebook for a podcast episode.
 tags:
   site: alvagante.com
   cadence: on-demand
-  media: blog-post
+  media: podcast
 inputs:
   properties:
     topic:
@@ -15,19 +15,19 @@ inputs:
   required: []
 jobs:
   - name: generate
-    description: Generate the blog post and write its site artifact.
+    description: Generate the NotebookLM podcast source notebook and write its site artifact.
     steps:
       - name: generate
-        description: Run site-curation.write_blog_post.
+        description: Run site-curation.prepare_notebooklm_podcast.
         task:
           type: model_method
           modelIdOrName: site-curation
-          methodName: write_blog_post
+          methodName: prepare_notebooklm_podcast
           inputs:
             mode: standalone
             topic: ${{ inputs.topic }}
             style: alfabot
-            source: AI-generated engineering content
+            source: AI-generated engineering content and prior media artifacts
             writeFile: true
             dryRun: false
         dependsOn: []

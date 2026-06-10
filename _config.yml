@@ -63,3 +63,12 @@ collections:
   ai-social-posts:
     output: true
     permalink: /ai-engineer/social/:path/
+  ai-podcasts:
+    output: true
+    permalink: /ai-engineer/podcasts/:path/
+  ai-videos:
+    output: true
+    permalink: /ai-engineer/videos/:path/
+  ai-memes:
+    output: true
+    permalink: /ai-engineer/memes/:path/
